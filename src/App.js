@@ -1,7 +1,7 @@
 import React from "react";
 import Title from "./components/Title";
 import Form from "./components/Form";
-import Table from "./components/Table";
+import Table from "./components/TableContainer";
 
 
 const App = () => {
@@ -14,7 +14,5 @@ const App = () => {
     </div>
   );
 };
-
-
 
 export default App;
