@@ -2,6 +2,7 @@ import React from "react";
 
 
 function TableContainer(props) {
+  
     if (props.loading) {
       return <h1>Loading...</h1>;
     }
@@ -11,9 +12,9 @@ function TableContainer(props) {
           <thead>
             <tr>
               <th scope="col">Image</th>
-              <th scope="col">Name</th>
+              <th scope="col" onClick={props.sortByName}><a href="#">Name</a></th>
               <th scope="col">Phone</th>
-              <th scope="col">Email</th>
+              <th scope="col" onClick={props.sortByEmail}><a href="#">Email</a></th>
               <th scope="col">DOB</th>
             </tr>
           </thead>
@@ -23,7 +24,7 @@ function TableContainer(props) {
                 <tr>
                   <th
                     scope="row"
-                    id={`${employee.name.first} ${employee.name.last}`}
+                    id={`${employee.name.first} ${employee.name.last}`} key={employee.email}
                   >
                     <img
                       src={employee.picture.medium}
