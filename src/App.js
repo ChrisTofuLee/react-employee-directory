@@ -8,6 +8,8 @@ import TableContainer from "./components/TableContainer";
 class App extends Component {
   constructor(props) {
     super(props);
+
+    
     this.state = {
       search: "",
       employeeList: [],
@@ -16,11 +18,11 @@ class App extends Component {
       loading: true,
       error: null,
       countName: 0,
-      countDob: 0,
       countEmail: 0,
     };
   }
 
+  //sort function to sort table by name which handles a-z or z-a by using the countName state
   sortByName = () => {
     if (this.state.countName == 0) {
       const newData = this.state.employeeFilterList.sort((a, b) => {
@@ -51,6 +53,7 @@ class App extends Component {
     }
   };
 
+  //dynamic sort function from a-z for emails 
   dynamicSort(property) {
     var sortOrder = 1;
     if (property[0] === "-") {
@@ -66,6 +69,7 @@ class App extends Component {
     };
   }
 
+    //dynamic sort function from z-a for emails 
   dynamicNegativeSort(property) {
     var sortOrder = 1;
     if (property[0] === "-") {
@@ -81,6 +85,7 @@ class App extends Component {
     };
   }
 
+  //function to call on the dynamic sorting of emails
   sortByEmail = () => {
     if (this.state.countEmail == 0) {
       const newData = this.state.employeeFilterList.sort(
@@ -101,30 +106,31 @@ class App extends Component {
     }
   };
 
-  sortByDob = () => {
-    if (this.state.countDob == 0) {
-      const newData = this.state.employeeFilterList.sort(
-        this.dynamicSort("email")
-      );
-      this.setState({
-        countDob: 1,
-        employeeFilterList: newData,
-      });
-    } else {
-      const newData = this.state.employeeFilterList.sort(
-        this.dynamicNegativeSort("phone")
-      );
-      this.setState({
-        countDob: 0,
-        employeeFilterList: newData,
-      });
-    }
-  };
+  // sortByDob = () => {
+  //   if (this.state.countDob == 0) {
+  //     const newData = this.state.employeeFilterList.sort(
+  //       this.dynamicSort("email")
+  //     );
+  //     this.setState({
+  //       countDob: 1,
+  //       employeeFilterList: newData,
+  //     });
+  //   } else {
+  //     const newData = this.state.employeeFilterList.sort(
+  //       this.dynamicNegativeSort("phone")
+  //     );
+  //     this.setState({
+  //       countDob: 0,
+  //       employeeFilterList: newData,
+  //     });
+  //   }
+  // };
 
   componentDidMount() {
     this.fetchEmployees();
   }
 
+  //api call for employee list with error handling
   fetchEmployees = async () => {
     try {
       const { data } = await axios.get(
@@ -147,6 +153,7 @@ class App extends Component {
     }
   };
 
+  //function to filter employee list using a duplicate state of the employee list
   filterFunction = () => {
     const employeeFilter = this.state.employeeList.filter((employee) => {
       let name = `${employee.name.first} ${employee.name.last}`;
@@ -157,6 +164,7 @@ class App extends Component {
     });
   };
 
+  //connecting function from the search input to the filter function to pull the filter out employee names inputted
   onSearch = async (event) => {
     await this.setState({
       search: event.target.value,
