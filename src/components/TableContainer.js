@@ -1,48 +1,8 @@
-import React, { Component } from "react";
-import axios from "axios";
+import React from "react";
 
 
-class TableContainer extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      employeeList: [],
-      search: "",
-      filter: "",
-      loading: true,
-      error: null,
-    };
-  }
-
-  componentDidMount() {
-    this.fetchEmployees();
-  }
-
-  fetchEmployees = async () => {
-    try {
-      const { data } = await axios.get(
-        "https://randomuser.me/api/?results=100&nat=gb"
-      );
-
-      if (data.results) {
-        this.setState({
-          employeeList: data.results,
-          error: null,
-          loading: false,
-        });
-      }
-    } catch (error) {
-      this.setState({
-        loading: false,
-        error,
-      });
-    }
-  };
-
-  render() {
-    
-    if (this.state.loading) {
+function TableContainer(props) {
+    if (props.loading) {
       return <h1>Loading...</h1>;
     }
     return (
@@ -58,17 +18,20 @@ class TableContainer extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.employeeList.map((employee) => {
+            {props.employeeList.map((employee) => {
               return (
                 <tr>
-                  <th scope="row">
+                  <th
+                    scope="row"
+                    id={`${employee.name.first} ${employee.name.last}`}
+                  >
                     <img
                       src={employee.picture.medium}
                       className="rounded mx-auto d-block"
                       alt="..."
                     />
                   </th>
-                  <td className="align-middle">{employee.name.first}</td>
+                  <td className="align-middle">{`${employee.name.first} ${employee.name.last}`}</td>
                   <td className="align-middle">{employee.phone}</td>
                   <td className="align-middle">{employee.email}</td>
                   <td className="align-middle">
@@ -82,6 +45,5 @@ class TableContainer extends Component {
       </div>
     );
   }
-}
 
 export default TableContainer;
